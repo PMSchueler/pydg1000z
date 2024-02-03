@@ -54,7 +54,7 @@ with PYDG1000Z(address="10.0.0.124") as awg:
 * FunctionGeneratorWaveform.WHITENOISE : 
 
 `
-For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [DG1000Z Progamming Guide (Feb 2014)](/doc/DG1000Z_ProgrammingGuide_EN.pdf) section 3.17
+For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [DG1000Z Progamming Guide (Feb 2014)](/doc/DG1000Z_ProgrammingGuide_EN.pdf) 
 `
 
 ## Supported methods
