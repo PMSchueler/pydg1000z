@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Coderunner
-.tmp.html
+*.tmp.html
