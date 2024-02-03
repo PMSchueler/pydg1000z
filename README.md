@@ -46,12 +46,12 @@ with PYDG1000Z(address="10.0.0.124") as awg:
 
 ## Supported waveforms
 
-* FunctionGeneratorWaveform.SINE :
-* FunctionGeneratorWaveform.SQUARE :
-* FunctionGeneratorWaveform.RAMP :
-* FunctionGeneratorWaveform.TRGL :
-* FunctionGeneratorWaveform.DC :
-* FunctionGeneratorWaveform.WHITENOISE : 
+* FunctionGeneratorWaveform.SINE : Set the waveform of the specified channel to sine waveform with the specified frequency, amplitude, offset and phase
+* FunctionGeneratorWaveform.SQUARE : Set the waveform of the specified channel to square waveform with the specified frequency, amplitude, offset and phase.
+* FunctionGeneratorWaveform.RAMP : Set the waveform of the specified channel to ramp waveform with the specifiedfrequency, amplitude, offset and phase.
+* FunctionGeneratorWaveform.TRGL : Set the waveform of the specified channel to triangle waveform with the specified frequency, amplitude, offset and phase.
+* FunctionGeneratorWaveform.DC : Set the waveform of the specified channel to DC with the specified offset.
+* FunctionGeneratorWaveform.WHITENOISE : Set the waveform of the specified channel to noise with the specified amplitude and offset.
 
 `
 For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [DG1000Z Progamming Guide (Feb 2014)](/doc/DG1000Z_ProgrammingGuide_EN.pdf) 
