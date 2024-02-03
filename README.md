@@ -13,88 +13,51 @@ There is a PyPi package that can be installed using
 pip install pydg1000z
 ```
 
-## Simple example to fetch waveforms:
+## Simple example to generate waveforms:
 
 ```python
-from pydho800.pydho800 import PYDHO800
+import time
+from pydg1000z import *
+from labdevices.scpi import SCPIDeviceEthernet
 
-with DHO800(address = "10.0.0.123") as dho:
-    print(f"Identify: {dho.identify()}")
+with PYDG1000Z(address="10.0.0.124") as awg:
 
-    dho.set_channel_enable(0, True)
-    dho.set_channel_enable(1, True)
+  awg.set_channel_enabled(0, True)
+  awg.set_channel_enabled(1, True)
 
-    dho.set_channel_scale(0,.1)    # 100 mV/div
-    dho.set_timebase_scale(100e-6) # 100 us/div
+  awg.set_channel_frequency(0, 600000)
+  awg.set_channel_waveform(channel=0, waveform=FunctionGeneratorWaveform.SINE)
+  awg.set_channel_waveform(channel=1, waveform=FunctionGeneratorWaveform.SINE)
 
-    # Set memory depth to 10 million samples
-    tx_depth = dho.memory_depth_t.M_10M
-    dho.set_memory_depth(tx_depth)
+  awg.set_channel_amplitude(0, 5.0)
+  awg.set_coupling(True)
 
-    # DHO914S/DHO924S specific for the signal generator
-    signal_gen_waveform = dho.signal_gen_waveform_t.SINE
-    dho.set_signal_gen_waveform(signal_gen_waveform)
-    dho.set_signal_gen_amp(3.5)      # 3.5 Vpp
-    dho.set_signal_gen_freq(1*10**6) # 1 MHz
+  awg.set_channel_frequency(0, 1000)
+  time.sleep(10)
 
-    # Back to the oscilloscope
-    dho.set_run_mode(OscilloscopeRunMode.RUN)
-    dho.set_run_mode(OscilloscopeRunMode.STOP)
+  awg.set_channel_frequency(0, 10000)
 
-    data = dho.query_waveform((0, 1))
-    print(data)
+  print("Press Key to switch off")
+  input()
 
-    import matplotlib.pyplot as plt
-    plt.plot(data['x'], data['y0'], label = "Ch1")
-    plt.plot(data['x'], data['y1'], label = "Ch2")
-
-    # Note if only one channel were enabled, it would be accessed by:
-    # plt.plot(data['x'], data['y'], label = "Ch1")
-
-    plt.show()
+  awg.set_channel_enabled(0, False)
+  awg.set_channel_enabled(1, False)
 ```
 
-Note that ```numpy``` usage is optional for this implementation.
-One can enable numpy support using ```useNumpy = True``` in the
-constructor.
+## Supported waveforms
 
-## Querying additional statistics
+* FunctionGeneratorWaveform.SINE :
+* FunctionGeneratorWaveform.SQUARE :
+* FunctionGeneratorWaveform.RAMP :
+* FunctionGeneratorWaveform.TRGL :
+* FunctionGeneratorWaveform.DC :
+* FunctionGeneratorWaveform.WHITENOISE : 
 
-This module allows - via the ```pylabdevs``` base class to query
-additional statistics:
-
-* ```mean``` Calculates the mean values and standard deviations
-   * A single value for each channels mean at ```["means"]["yN_avg"]```
-     and a single value for each standard deviation at ```["means"]["yN_std"]```
-     where ```N``` is the channel number
-* ```fft``` runs Fourier transform on all queried traces
-   * The result is stored in ```["fft"]["yN"]``` (complex values) and
-     in ```["fft"]["yN_real"]``` for the real valued Fourier transform.
-     Again ```N``` is the channel number
-* ```ifft``` runs inverse Fourier transform on all queried traces
-   * Works as ```fft``` but runs the inverse Fourier transform and stores
-     its result in ```ifft``` instead of ```fft```
-* ```correlate``` calculates the correlation between all queried
-  waveform pairs.
-   * The result of the correlations are stored in ```["correlation"]["yNyM"]```
-     for the correlation between channels ```M``` and ```N```
-* ```autocorrelate``` performs calculation of the autocorrelation of each
-  queried channel.
-   * The result of the autocorrelation is stored in ```["autocorrelation"]["yN"]```
-     for channel ```N```
-
-To request calculation of statistics pass the string for the
-desired statistic or a list of statistics to the ```stats```
-parameter of ```query_waveform```:
-
-```python
-with DHO800(address = "10.0.0.123") as dho:
-	data = dho.query_waveform((1,2), stats = [ 'mean', 'fft' ])
-```
+`
+For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [DG1000Z Progamming Guide (Feb 2014)](/doc/DG1000Z_ProgrammingGuide_EN.pdf) section 3.17
+`
 
 ## Supported methods
-
-More documentation in progress ...
 
 * ```identify()```
 * Connection management (when not using ```with``` context management):
@@ -102,24 +65,17 @@ More documentation in progress ...
    * ```disconnect()```
 * ```set_channel_enable(channel, enabled)```
 * ```is_channel_enabled(channel)```
-* ```set_sweep_mode(mode)```
-* ```get_sweep_mode()```
-* ```set_trigger_mode(mode)```
-* ```get_trigger_mode()```
-* ```force_trigger()```
-* ```set_timebase_mode(mode)```
-* ```get_timebase_mode()```
-* ```set_run_mode(mode)```
-* ```get_run_mode()```
-* ```set_timebase_scale(secondsPerDivision)```
-* ```get_timebase_scale()```
-* ```set_channel_coupling(channel, couplingMode)```
-* ```get_channel_coupling(channel)```
-* ```set_channel_probe_ratio(channel, ratio)```
-* ```get_channel_probe_ratio(channel)```
-* ```set_channel_scale(channel, scale)```
-* ```get_channel_scale(channel)```
-* ```query_waveform(channel, stats = None)```
-* ```off()```
+* ```set_channel_waveform(channel, waveform[, arbitrary])```
+* ```get_channel_waveform(channel)```
+* ```set_channel_frequency(channel, freq_Hz)```
+* ```get_channel_frequency(channel)```
+* ```set_channel_phase(channel, phase_deg:float)```
+* ```get_channel_phase(channel)```
+* ```set_channel_amplitude(channel, amp_Vpp:float)```
+* ```get_channel_amplitude(channel)```
+* ```set_channel_offset(channel, )```
+* ```get_channel_offset(channel)```
+* ```set_coupling(on)```
+* ```get_coupling()```
 
 
