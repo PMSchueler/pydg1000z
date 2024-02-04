@@ -54,7 +54,7 @@ with PYDG1000Z(address="10.0.0.124") as awg:
 * FunctionGeneratorWaveform.WHITENOISE : Set the waveform of the specified channel to noise with the specified amplitude and offset.
 
 `
-For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [DG1000Z Progamming Guide (Feb 2014)](/doc/DG1000Z_ProgrammingGuide_EN.pdf) 
+For more detailed information about waveforms see **:SOURce:FUNCtion** [DG1000Z Progamming Guide](/doc/DG1000Z_ProgrammingGuide_EN.pdf)
 `
 
 ## Supported methods
@@ -73,7 +73,7 @@ For more detailed information about waveforms see ***:SOURce:FUNCtion:SHAPe*** [
 * ```get_channel_phase(channel)```
 * ```set_channel_amplitude(channel, amp_Vpp:float)```
 * ```get_channel_amplitude(channel)```
-* ```set_channel_offset(channel, )```
+* ```set_channel_offset(channeloffset_V: float)```
 * ```get_channel_offset(channel)```
 * ```set_coupling(on)```
 * ```get_coupling()```
