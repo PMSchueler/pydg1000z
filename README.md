@@ -53,9 +53,9 @@ with PYDG1000Z(address="10.0.0.124") as awg:
 * FunctionGeneratorWaveform.DC : Set the waveform of the specified channel to DC with the specified offset.
 * FunctionGeneratorWaveform.WHITENOISE : Set the waveform of the specified channel to noise with the specified amplitude and offset.
 
-`
-For more detailed information about waveforms see **:SOURce:FUNCtion** [DG1000Z Progamming Guide](doc/DG1000Z_ProgrammingGuide_EN.pdf)
-`
+
+For more detailed information about waveforms see **:SOURce:FUNCtion** in [DG1000Z Progamming Guide](/doc/DG1000Z_ProgrammingGuide_EN.pdf)
+
 
 ## Supported methods
 
