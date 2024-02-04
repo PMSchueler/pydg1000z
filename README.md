@@ -3,7 +3,7 @@
 ![A Rigol DG1000Z setup](/doc/DG1000Z.jpg)
 
 A simple Python library and utility to control Rigol DG1000Z arbitrary waveform generator. This library implements the [functiongenerator](https://github.com/tspspi/pylabdevs/src/labdevices/functiongenerator.py) class from
-the [labdevices](https://github.com/tspspi/pylabdevs) package which exposes the public interface.
+the [pylabdevs](https://github.com/tspspi/pylabdevs) package which exposes the public interface.
 
 ## Installing 
 
