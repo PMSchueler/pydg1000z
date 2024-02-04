@@ -19,6 +19,7 @@ pip install pydg1000z
 import time
 from pydg1000z import *
 from labdevices.scpi import SCPIDeviceEthernet
+from labdevices.functiongenerator import FunctionGeneratorWaveform
 
 with PYDG1000Z(address="10.0.0.124") as awg:
 
