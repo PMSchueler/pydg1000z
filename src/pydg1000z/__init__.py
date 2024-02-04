@@ -1,1 +1,1 @@
-from .pydg1000 import PYDG1000
+from .pydg1000z import PYDG1000Z
